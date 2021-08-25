@@ -7,6 +7,20 @@ router.get("/", (req, res) => {
 	res.render("index");
 });
 
+router.get("/:username", async (req, res) => {
+	const user = await req.db.users.findOne({
+		username: req.params.username,
+	});
+
+	if (user) {
+		res.render("profile", {
+			user: user,
+		});
+	} else {
+		res.render("404");
+	}
+});
+
 router.get("/signup", (req, res) => {
 	res.render("signup");
 });
